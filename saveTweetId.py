@@ -1,7 +1,6 @@
 def SaveTweetId(tweetId):
     #update what was the last tweet I looked at
-    #save this number to a file and read it in at the top
-    #unless there are no new tweets
+    #save this number to a file
 
         value = (tweetId)
         s = str(value)

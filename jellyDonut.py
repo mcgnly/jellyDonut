@@ -7,23 +7,27 @@ except ImportError:
 # Import the necessary methods from "twitter" library
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 from mailgun import Mailgun
-from saveLastTweet import SaveTweetId
+from saveTweetId import SaveTweetId
 
-#change them to the new real ones
 #get them working here again without publishing them to git
-#put repo back on github
 #figure out scheduling
-with open('apikeys.txt', 'r') as a:
-    readData = a.read()
-a.closed
+#open a file called "apikeys" with keys and tokens for Twitter separated by newlines
+with open('apikeys.txt', 'r') as keyFile:
+    keyFile = open('apikeys.txt', 'r')
+    ACCESS_TOKEN = keyFile.readline().rstrip()
+    ACCESS_TOKEN_SECRET = keyFile.readline().rstrip()
+    CONSUMER_KEY = keyFile.readline().rstrip()
+    CONSUMER_SECRET = keyFile.readline().rstrip()
+    MAILGUN_KEY = keyFile.readline().rstrip()
+keyFile.closed
 
-oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
+oauth = OAuth(ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 
 # Initiate the connection to Twitter REST API
 twitter = Twitter(auth=oauth)
 
 #this is the text I'm looking for in the tweets
-importantWord = "berlin"
+importantWord = "baby"
 
 #I only care about tweets I haven't seen yet
 #read the last tweet ID from the file holding it
@@ -45,7 +49,7 @@ for i in lastTweets:
     #look for the trigger word
     if importantWord in thisTweet.lower():
         #trigger an email with the full text of the tweet
-        Mailgun(thisTweet)
+        Mailgun(MAILGUN_KEY, thisTweet)
 
 #get the last tweet's ID and save it out to a file so I only start looking from there
 if len(lastTweets)>0:

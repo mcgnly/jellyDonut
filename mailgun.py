@@ -1,6 +1,6 @@
 import requests
 
-def Mailgun(msgText):
+def Mailgun(MAILGUN_KEY, msgText):
     return requests.post(
         "https://api.mailgun.net/v3/sandbox4c0b30d5574541faaec2a8613c4f641e.mailgun.org/messages",
         auth=("api", MAILGUN_KEY),
