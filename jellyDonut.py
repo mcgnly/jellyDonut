@@ -9,9 +9,21 @@ from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 from mailgun import Mailgun
 from saveTweetId import SaveTweetId
 
-#get them working here again without publishing them to git
-#figure out scheduling
-#open a file called "apikeys" with keys and tokens for Twitter separated by newlines
+#todo:
+    #figure out scheduling
+    #add email addresses to database? dictionary?
+    #match the list of emails to a keyword or DB entry or something
+    #be able to add an email to this list
+    #be able to add a keyword to this dictionary/DB
+    #be able to remove email address
+    #get a better/bigger soln than mailgun?
+    #django website?
+
+
+
+
+#open a file called "apikeys" with keys and tokens for Twitter separated by newlines,
+# strip the invisible newline char from it
 with open('apikeys.txt', 'r') as keyFile:
     keyFile = open('apikeys.txt', 'r')
     ACCESS_TOKEN = keyFile.readline().rstrip()
@@ -27,7 +39,7 @@ oauth = OAuth(ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter = Twitter(auth=oauth)
 
 #this is the text I'm looking for in the tweets
-importantWord = "baby"
+importantWord = "berlin"
 
 #I only care about tweets I haven't seen yet
 #read the last tweet ID from the file holding it
