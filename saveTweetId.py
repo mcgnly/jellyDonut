@@ -1,4 +1,4 @@
-def SaveTweetId(tweetId):
+def saveTweetId(tweetId):
     #update what was the last tweet I looked at
     #save this number to a file
 

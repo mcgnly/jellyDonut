@@ -6,8 +6,9 @@ except ImportError:
 
 # Import the necessary methods from "twitter" library
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
-from mailgun import Mailgun
-from saveTweetId import SaveTweetId
+from mailgun import mailgun
+from saveTweetId import saveTweetId
+from readTweetId import readTweetId
 
 #todo:
     #figure out scheduling
@@ -41,16 +42,11 @@ twitter = Twitter(auth=oauth)
 #this is the text I'm looking for in the tweets
 importantWord = "berlin"
 
-#I only care about tweets I haven't seen yet
-#read the last tweet ID from the file holding it
-#for testing purposes, a few tweets ago is 681658764840140800
-with open('lastTweetId.txt', 'r') as f:
-    readData = f.read()
-f.closed
+readData = int(readTweetId())
 
 # Get a particular user's timeline (up to 3,200 of his/her most recent tweets).
 # this is for amanda palmer, since I last looked at it, excluding replies and retweets
-lastTweets = twitter.statuses.user_timeline.tweets(screen_name="amandapalmer", since_id = int(readData),
+lastTweets = twitter.statuses.user_timeline.tweets(screen_name="amandapalmer", since_id = readData,
                                                    exclude_replies = "true", include_rts = "false")
 
 #step through list of last tweets
@@ -61,8 +57,8 @@ for i in lastTweets:
     #look for the trigger word
     if importantWord in thisTweet.lower():
         #trigger an email with the full text of the tweet
-        Mailgun(MAILGUN_KEY, thisTweet)
+        mailgun(MAILGUN_KEY, thisTweet)
 
 #get the last tweet's ID and save it out to a file so I only start looking from there
 if len(lastTweets)>0:
-    SaveTweetId(lastTweets[0]['id'])
+    saveTweetId(lastTweets[0]['id'])
