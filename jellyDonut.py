@@ -42,12 +42,17 @@ twitter = Twitter(auth=oauth)
 #this is the text I'm looking for in the tweets
 importantWord = "berlin"
 
+#read the ID of the last tweet I've already seen is so I can look for only new ones
 readData = int(readTweetId())
 
 # Get a particular user's timeline (up to 3,200 of his/her most recent tweets).
 # this is for amanda palmer, since I last looked at it, excluding replies and retweets
 lastTweets = twitter.statuses.user_timeline.tweets(screen_name="amandapalmer", since_id = readData,
                                                    exclude_replies = "true", include_rts = "false")
+
+#get the last tweet's ID and save it out to a file so I only start looking from there
+if len(lastTweets)>0:
+    saveTweetId(lastTweets[0]['id'])
 
 #step through list of last tweets
 for i in lastTweets:
@@ -59,6 +64,3 @@ for i in lastTweets:
         #trigger an email with the full text of the tweet
         mailgun(MAILGUN_KEY, thisTweet)
 
-#get the last tweet's ID and save it out to a file so I only start looking from there
-if len(lastTweets)>0:
-    saveTweetId(lastTweets[0]['id'])
