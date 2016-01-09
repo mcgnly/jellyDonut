@@ -11,7 +11,6 @@ from saveTweetId import saveTweetId
 from readTweetId import readTweetId
 
 #todo:
-    #figure out scheduling
     #add email addresses to database? dictionary?
     #match the list of emails to a keyword or DB entry or something
     #be able to add an email to this list
