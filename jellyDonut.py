@@ -27,7 +27,7 @@ oauth = OAuth(ACCESS_TOKEN, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter = Twitter(auth=oauth)
 
 #this is the text I'm looking for in the tweets
-importantWord = "baby"
+importantWord = "berlin"
 
 #I only care about tweets I haven't seen yet
 #read the last tweet ID from the file holding it
