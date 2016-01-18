@@ -104,4 +104,5 @@ Thumbs.db
 # annoying and I don't think useful #
 ######################
 /.idea
+/lastTweetId.txt
 
